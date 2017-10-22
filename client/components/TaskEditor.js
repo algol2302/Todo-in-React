@@ -1,6 +1,7 @@
 import React from 'react';
 
 import ColorPicker from './ColorPicker.js';
+import PriorityPicker from './PriorityPicker.js';
 
 import './TaskEditor.less';
 
@@ -11,7 +12,7 @@ class TaskEditor extends React.Component{
             index : 0,
             title : '',
             comments : '',
-            priority : '',
+            priority : 'Middle',
             color: '#FFFFFF',
             status : 'New',
             deadline : Date()
@@ -45,8 +46,8 @@ class TaskEditor extends React.Component{
         this.setState({ color });
     }
 
-    handlePriorityChange(event) {
-        this.setState({ priority: event.target.value });
+    handlePriorityChange(priority) {
+        this.setState({ priority });
     }
 
     handleDeadlineChange(event) {
@@ -100,14 +101,10 @@ class TaskEditor extends React.Component{
                     value={this.state.comments}
                     onChange={this.handleCommentsChange}
                 />
-                <div className='Task__Priority'>
-                    <input type="radio" name="rb" id="rb1" />
-                    <label htmlFor="rb1">High</label>
-                    <input type="radio" name="rb" id="rb2" defaultChecked="defaultChecked" />
-                    <label htmlFor="rb2">Middle</label>
-                    <input type="radio" name="rb" id="rb3" />
-                    <label htmlFor="rb3">Low</label>
-                </div>
+                <PriorityPicker
+                    value={this.state.priority}
+                    onChange={this.handlePriorityChange}
+                />
                 <input
                     type='text'
                     className='TaskEditor__title'
