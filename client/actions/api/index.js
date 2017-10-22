@@ -3,15 +3,15 @@ import axios from 'axios';
 import { apiPrefix } from '../../../etc/config.json';
 
 export default {
-    listNotes() {
-        return axios.get(`${apiPrefix}/notes`);
+    listTasks() {
+        return axios.get(`${apiPrefix}/tasks`);
     },
 
-    createNote(data) {
-        return axios.post(`${apiPrefix}/notes`, data);
+    createTask(data) {
+        return axios.post(`${apiPrefix}/tasks`, data);
     },
 
-    deleteNote(noteId) {
-        return axios.delete(`${apiPrefix}/notes/${noteId}`);
+    deleteTask(taskId) {
+        return axios.delete(`${apiPrefix}/tasks/${taskId}`);
     }
 };

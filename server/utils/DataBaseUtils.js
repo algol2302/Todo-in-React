@@ -2,29 +2,32 @@ import mongoose from 'mongoose';
 
 import config from '../../etc/config.json';
 
-import '../models/Note';
+import '../models/Task.js';
 
-const Note = mongoose.model('Note');
+const Task = mongoose.model('Task');
 
 export function setUpConnection() {
     mongoose.connect(`mongodb://${config.db.host}:${config.db.port}/${config.db.name}`);
 }
 
-export function listNotes(id) {
-    return Note.find();
+export function listTasks(id) {
+    return Task.find();
 }
 
-export function createNote(data) {
-    const note = new Note({
+export function createTask(data) {
+    const task = new Task({
+        index: data.index,
         title: data.title,
-        text: data.text,
+        comments: data.comments,
+        priority: data.priority,
         color: data.color,
-        createdAt: new Date()
+        status: data.status,
+        deadline: new Date()
     });
 
-    return note.save();
+    return task.save();
 }
 
-export function deleteNote(id) {
-    return Note.findById(id).remove();
+export function deleteTask(id) {
+    return Task.findById(id).remove();
 }

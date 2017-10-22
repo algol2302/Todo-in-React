@@ -19,16 +19,19 @@ app.use( bodyParser.json() );
 app.use(cors({ origin: '*' }));
 
 // RESTful api handlers
-app.get('/notes', (req, res) => {
-    db.listNotes().then(data => res.send(data));
+app.get('/tasks', (req, res) => {
+    db.listTasks().then(data => res.send(data));
+    console.log('REST get');
 });
 
-app.post('/notes', (req, res) => {
-    db.createNote(req.body).then(data => res.send(data));
+app.post('/tasks', (req, res) => {
+    db.createTask(req.body).then(data => res.send(data));
+    console.log('REST post');
 });
 
-app.delete('/notes/:id', (req, res) => {
-    db.deleteNote(req.params.id).then(data => res.send(data));
+app.delete('/tasks/:id', (req, res) => {
+    db.deleteTask(req.params.id).then(data => res.send(data));
+    console.log('REST delete');
 });
 
 const server = app.listen(serverPort, function() {

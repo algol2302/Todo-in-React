@@ -1,17 +1,17 @@
 import React from 'react';
 
-import NotesStore from '../stores/NotesStore.js';
-import NotesActions from '../actions/NotesActions.js';
+import TasksStore from '../stores/TasksStore.js';
+import TasksActions from '../actions/TasksActions.js';
 
-import NoteEditor from './NoteEditor.js';
-import NotesGrid from './NotesGrid.js';
+import TaskEditor from './TaskEditor.js';
+import TasksGrid from './TasksGrid.js';
 
 import './App.less';
 
 function getStateFromFlux() {
     return {
-        isLoading: NotesStore.isLoading(),
-        notes: NotesStore.getNotes()
+        isLoading: TasksStore.isLoading(),
+        tasks: TasksStore.getTasks()
     };
 }
 
@@ -19,37 +19,36 @@ class App extends React.Component {
     constructor() {
         super();
         this.state = {
-            isLoading: NotesStore.isLoading(),
-            notes: NotesStore.getNotes()
+            isLoading: TasksStore.isLoading(),
+            tasks: TasksStore.getTasks()
         };
     }
 
     componentWillMount() {
-        NotesActions.loadNotes();
+        TasksActions.loadTasks();
     }
 
     componentDidMount() {
-        NotesStore.addChangeListener(this._onChange.bind(this));
+        TasksStore.addChangeListener(this._onChange.bind(this));
     }
 
     componentWillUnmount() {
-        NotesStore.removeChangeListener(this._onChange.bind(this));
+        TasksStore.removeChangeListener(this._onChange.bind(this));
     }
 
-    handleNoteDelete(note) {
-        NotesActions.deleteNote(note.id);
+    handleTaskDelete(task) {
+        TasksActions.deleteTask(task.id);
     }
-
-    handleNoteAdd(data) {
-        NotesActions.createNote(data);
-    }
+    handleTaskAdd(data) {
+        TasksActions.createTask(data);
+    } 
     
     render() {
         return (
             <div className='App'>
-                <h2 className='App__header'>Notesapp</h2>
-                <NoteEditor onNoteAdd={this.handleNoteAdd.bind(this)} />
-                <NotesGrid notes={this.state.notes} onNoteDelete={this.handleNoteDelete.bind(this)} />
+                <h2 className='App__header'>Todo Tasks</h2>
+                <TaskEditor onTaskAdd={this.handleTaskAdd.bind(this)} />
+                <TasksGrid tasks={this.state.tasks} onTaskDelete={this.handleTaskDelete.bind(this)} />
             </div> 
         );
     }

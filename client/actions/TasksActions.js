@@ -3,41 +3,41 @@ import Constants from '../constants/AppConstants';
 
 import api from './api/index';
 
-const NoteActions = {
-    loadNotes() {
+const TaskActions = {
+    loadTasks() {
         AppDispatcher.dispatch({
-            type: Constants.LOAD_NOTES_REQUEST
+            type: Constants.LOAD_TASKS_REQUEST
         });
 
-        api.listNotes()
+        api.listTasks()
         .then(({ data }) =>
             AppDispatcher.dispatch({
-                type: Constants.LOAD_NOTES_SUCCESS,
-                notes: data
+                type: Constants.LOAD_TASKS_SUCCESS,
+                tasks: data
             })
         )
         .catch(err =>
             AppDispatcher.dispatch({
-                type: Constants.LOAD_NOTES_FAIL,
+                type: Constants.LOAD_TASKS_FAIL,
                 error: err
             })
         );
     },
 
-    createNote(note) {
-        api.createNote(note)
+    createTask(task) {
+        api.createTask(task)
         .then(() =>
-            this.loadNotes()
+            this.loadTasks()
         )
         .catch(err =>
             console.error(err)
         );
     },
 
-    deleteNote(noteId) {
-        api.deleteNote(noteId)
+    deleteTask(taskId) {
+        api.deleteTask(taskId)
         .then(() =>
-            this.loadNotes()
+            this.loadTasks()
         )
         .catch(err =>
             console.error(err)
@@ -45,4 +45,4 @@ const NoteActions = {
     }
 };
 
-export default NoteActions;
+export default TaskActions;
