@@ -1,7 +1,11 @@
 import React from 'react';
+import DatePicker from 'react-datepicker';
+import moment from 'moment';
 
 import ColorPicker from './ColorPicker.js';
 import PriorityPicker from './PriorityPicker.js';
+
+import 'react-datepicker/dist/react-datepicker.css';
 
 import './TaskEditor.less';
 
@@ -15,14 +19,13 @@ class TaskEditor extends React.Component{
             priority : 'Middle',
             color: '#FFFFFF',
             status : 'New',
-            deadline : Date()
+            deadline : Date() 
         };
         this.handleIndexChange = this.handleIndexChange.bind(this);
         this.handleTitleChange = this.handleTitleChange.bind(this);
         this.handleCommentsChange = this.handleCommentsChange.bind(this);
         this.handleTaskAdd = this.handleTaskAdd.bind(this);
         this.handleColorChange = this.handleColorChange.bind(this);
-        this.handleStatusChange = this.handleStatusChange.bind(this);
         this.handlePriorityChange = this.handlePriorityChange.bind(this);
         this.handleDeadlineChange = this.handleDeadlineChange.bind(this);
     }
@@ -38,10 +41,6 @@ class TaskEditor extends React.Component{
         this.setState({ comments: event.target.value });
     }
 
-    handleStatusChange(event) {
-        this.setState({ status: event.target.value });
-    }
-
     handleColorChange(color) {
         this.setState({ color });
     }
@@ -50,8 +49,9 @@ class TaskEditor extends React.Component{
         this.setState({ priority });
     }
 
-    handleDeadlineChange(event) {
-        this.setState({ deadline: event.target.value });
+    handleDeadlineChange(deadline) {
+        console.log(deadline);
+        this.setState({ deadline });
     }
 
     handleTaskAdd() {
@@ -105,13 +105,14 @@ class TaskEditor extends React.Component{
                     value={this.state.priority}
                     onChange={this.handlePriorityChange}
                 />
-                <input
-                    type='text'
-                    className='TaskEditor__title'
-                    placeholder='Enter status'
-                    value={this.state.status}
-                    onChange={this.handleStatusChange}
-                />
+                <div className="DatePicker">
+                    <DatePicker
+                        selected={this.state.startDate}
+                        placeholderText="Enter deadline"
+                        onChange={this.handleDeadlineChange}
+                        minDate={Date()}
+                    />
+                </div>
                 <div className='TaskEditor__footer'>
                     <ColorPicker
                         value={this.state.color}
